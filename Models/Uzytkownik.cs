@@ -23,22 +23,14 @@ namespace Biblioteka.Models
         [Display(Name = "Nazwisko użytkownika:")]
         [MaxLength(20)]
         public string Nazwisko { get; set; }
-
+               
         [Display(Name = "Numer Legitymacji:")]
         [MaxLength(20)]
         public string nrLegitymacji { get; set; }
 
-        [Display(Name = "Numer karty:")]
+        [Display(Name = "Numer karty bibliotecznej:")]
         [MaxLength(20)]
         public string nrKarty { get; set; }
-
-        [Display(Name = "Numer pracownika:")]
-        [MaxLength(20)]
-        public string nrPracownika { get; set; }
-
-        [Display(Name = "Stanowisko:")]
-        [MaxLength(20)]
-        public string nrStanowisko { get; set; }
 
         [Display(Name = "Klasa:")]
         [MaxLength(20)]
