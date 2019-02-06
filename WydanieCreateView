@@ -1,0 +1,115 @@
+@model NowaBiblioteka.Models.Wydanie
+
+@{
+    ViewBag.Title = "Dodaj egzemplarz";
+}
+
+<h2>Dodaj egzemplarz</h2>
+
+
+@using (Html.BeginForm("Create", "Wydanie", null, FormMethod.Post, new { enctype = "multipath /form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h5>Bibiloteka - Szkoła Podstawowa</h5>
+        <hr />
+        <table class="col-md-12">
+            <tr>
+                <td>
+                    <div class="form-group" class="col-md-6">
+                        @Html.LabelFor(model => model.IdKsiazka, "Wybierz książkę", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("IdKsiazka", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.IdKsiazka, "", new { @class = "text-danger" })
+                            <div><br /></div>
+                            <div class="btn-group" role="group" aria-label="...">
+                                <button type="button" class="btn btn-default">@Html.ActionLink("Dodaj książkę", "Create", "Ksiazka")</button>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Wydawanictwo.NazwaWydawnictwa, "Wybierz wydawnictwo", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("IdWydawnictwo", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.IdWydawnictwo, "", new { @class = "text-danger" })
+                            <div><br /></div>
+                            <div class="btn-group" role="group" aria-label="...">
+                                <button type="button" class="btn btn-default">@Html.ActionLink("Dodaj wydawnictwo", "Create", "Wydawnictwo")</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group" class="col-md-6">
+                        @Html.LabelFor(model => model.ISBN, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ISBN, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ISBN, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                </td>
+                <td>
+                    <div class="form-group" class="col-md-6">
+                        @Html.LabelFor(model => model.rokWydania, "Rok wydania", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.rokWydania, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.rokWydania, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-group" class="col-md-6">
+                        @Html.LabelFor(model => model.numerWydania, "Numer Wydania", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.numerWydania, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.numerWydania, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group" class="col-md-6">
+                        @Html.LabelFor(model => model.liczbaStron, "Liczba stron", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.liczbaStron, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.liczbaStron, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-group">
+                            @Html.LabelFor(model => model.zdjecieNazwa, htmlAttributes: new { @class = "control-label col-md-2" })
+                     <div class="col-md-10">
+                        <input type="file" id="obrazek" name="obrazek" accept="image/png, image/jpeg, image/gif" class="btn btn-default" />
+                            @Html.ValidationMessageFor(model => model.zdjecieNazwa, "", new { @class = "text-danger" })
+    </div>
+</div>
+                </td>
+                <td>
+                    <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Dodaj" class="btn btn-default" />
+                    </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
