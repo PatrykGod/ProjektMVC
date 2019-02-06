@@ -1,0 +1,51 @@
+// POST: Wydanie/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        
+        [Authorize(Roles = "Admin, Nauczyciel")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
+        public ActionResult Create([Bind(Include = "IdWydanie,ISBN,rokWydania,numerWydania,liczbaStron,zdjecieNazwa,IdKsiazka,IdWydawnictwo")] Wydanie wydanie, HttpPostedFileBase obrazek)
+        {
+            if (ModelState.IsValid)
+            {
+                if (obrazek != null)
+                {
+                    string nowaNazwa = Guid.NewGuid().ToString() + Path.GetExtension(obrazek.FileName);
+                    Sprawdz plik = new Sprawdz();
+                    Wynik sprawdz = plik.SprawdzPlik(obrazek, nowaNazwa);
+                    if (sprawdz.Sukces)
+                    {
+                        Skalowanie grafika = new Skalowanie();
+                        Wynik wynikMini = grafika.SkalujPlik(nowaNazwa, "~/Graphics/Mini", 100);
+                        Wynik wynikMidi = grafika.SkalujPlik(nowaNazwa, "~/Graphics/Midi", 800);
+                        if (wynikMidi.Sukces && wynikMini.Sukces)
+                        {
+                            wydanie.zdjecieNazwa = nowaNazwa;
+                        }
+                        else
+                        {
+                            ViewBag.Error = true;
+                            ViewBag.Komunikat = wynikMini.Error + wynikMidi.Error;
+                            ViewBag.IdKsiazka = new SelectList(db.Ksiazki, "IdKsiazka", "Tytul", wydanie.IdKsiazka);
+                            return View(wydanie);
+                        }
+                    }
+                    else
+                    {
+                        ViewBag.Error = true;
+                        ViewBag.Komunikat = sprawdz.Error;
+                        ViewBag.IdKsiazka = new SelectList(db.Ksiazki, "IdKsiazka", "Tytul", wydanie.IdKsiazka);
+                        return View(wydanie);
+                    }
+                }
+                db.Wydanie.Add(wydanie);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.IdKsiazka = new SelectList(db.Ksiazki, "IdKsiazka", "Tytul", wydanie.IdKsiazka);
+            ViewBag.IdWydawnictwo = new SelectList(db.Wydawnictwo, "IdWydawnictwo", "NazwaWydawnictwa", wydanie.IdWydawnictwo);
+            return View(wydanie);
+        }
