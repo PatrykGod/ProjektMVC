@@ -1,19 +1,19 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web;
 
-namespace Biblioteka.Models
+namespace NowaBiblioteka.Models
 {
     public class Uzytkownik : IdentityUser
     {
-        public Uzytkownik()
-        {
-
-        }
         [Key]
-        [Display(Name = "Użytkownik:")]
+        [Display(Name = "Identyfikator:")]
         public int IdUzytk { get; set; }
 
         [Display(Name = "Imię użytkownika:")]
@@ -23,18 +23,20 @@ namespace Biblioteka.Models
         [Display(Name = "Nazwisko użytkownika:")]
         [MaxLength(20)]
         public string Nazwisko { get; set; }
-               
+
         [Display(Name = "Numer Legitymacji:")]
         [MaxLength(20)]
         public string nrLegitymacji { get; set; }
 
-        [Display(Name = "Numer karty bibliotecznej:")]
+        [Display(Name = "Numer pracownika:")]
         [MaxLength(20)]
-        public string nrKarty { get; set; }
+        public string nrPracownika { get; set; }
 
         [Display(Name = "Klasa:")]
         [MaxLength(20)]
         public string Klasa { get; set; }
+
+        public virtual ICollection<Wypozyczenie> Wypozyczenie { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<Uzytkownik> manager)
         {

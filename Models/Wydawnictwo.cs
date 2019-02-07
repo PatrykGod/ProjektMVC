@@ -4,17 +4,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace Biblioteka.Models
+namespace NowaBiblioteka.Models
 {
     public class Wydawnictwo
     {
-        public Wydawnictwo()
-        {
-           this.Wydanie = new HashSet<Wydanie>();
-        }
         [Key]
         [Display(Name = "Identyfikator:")]
-        public int IdKategorii { get; set; }
+        public int IdWydawnictwo { get; set; }
 
         [Required]
         [Display(Name = "Nazwa wydawnictwa:")]
@@ -46,13 +42,12 @@ namespace Biblioteka.Models
         public string numerTelefonu { get; set; }
 
         [Required]
-        [MaxLength(15, ErrorMessage = "E-mail")]
+        [MaxLength(100, ErrorMessage = "E-mail")]
         public string eMail { get; set; }
 
         [Required]
-        [MaxLength(15, ErrorMessage = "Strona WWW")]
+        [MaxLength(100, ErrorMessage = "Strona WWW")]
         public string stronaWWW { get; set; }
-
 
         public virtual ICollection<Wydanie> Wydanie { get; set; }
     }

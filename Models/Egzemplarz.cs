@@ -4,14 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace Biblioteka.Models
+namespace NowaBiblioteka.Models
 {
     public class Egzemplarz
     {
-        public Egzemplarz()
-        {
-            this.Egzemplarz = new HashSet<Egzemplarz>();
-        }
         [Key]
         [Display(Name = "Identyfikator:")]
         public int IdEgzemplarz { get; set; }
@@ -30,7 +26,11 @@ namespace Biblioteka.Models
         [Display(Name = "Uwagi:")]
         public string Uwagi { get; set; }
 
-        public virtual ICollection<Egzemplarz> Egzemplarz { get; set; }
+        [Display(Name = "Wydanie egzemplarza:")]
+        public int IdWydanie { get; set; }
+        public virtual Wydanie Wydanie { get; set; }
+
+        public virtual ICollection<Wypozyczenie> Wypozyczenie { get; set; }
 
     }
 }
